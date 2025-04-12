@@ -17,6 +17,7 @@ import PrivacyPage from "./pages/PrivacyPage";
 import { ResumeProvider } from "./context/ResumeContext";
 import AdScript from "./components/AdScript";
 import AdPopup from "./components/AdPopup";
+import GoogleAnalytics from "./components/GoogleAnalytics";
 
 const queryClient = new QueryClient();
 
@@ -31,8 +32,9 @@ const App = () => (
       <Sonner />
       <AdScript />
       <ResumeProvider>
-        <AdPopup />
         <BrowserRouter>
+          <GoogleAnalytics />
+          <AdPopup />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/home" element={<HomePage />} />
