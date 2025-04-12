@@ -1,3 +1,4 @@
+
 User-agent: Googlebot
 Allow: /
 
@@ -10,5 +11,12 @@ Allow: /
 User-agent: facebookexternalhit
 Allow: /
 
+User-agent: Mediapartners-Google
+Allow: /
+
+User-agent: Adsbot-Google
+Allow: /
+
 User-agent: *
 Allow: /
+

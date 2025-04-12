@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 interface AdBannerProps {
   adSlot: string;
@@ -16,31 +16,47 @@ declare global {
 
 const AdBanner = ({ adSlot, format = 'auto', className = '', responsive = true }: AdBannerProps) => {
   const [isAdBlockDetected, setIsAdBlockDetected] = useState(false);
+  const adRef = useRef<HTMLDivElement>(null);
+  const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
+    if (isInitialized) {
+      return;
+    }
+    
     try {
+      // Only initialize this ad unit once
+      if (adRef.current && !adRef.current.getAttribute('data-adsbygoogle-initialized')) {
+        adRef.current.setAttribute('data-adsbygoogle-initialized', 'true');
+        
+        // Push ad only after component mounts and if not already initialized
+        setTimeout(() => {
+          // Wait for AdSense to be ready
+          if (typeof window.adsbygoogle !== 'undefined') {
+            (window.adsbygoogle = window.adsbygoogle || []).push({});
+            setIsInitialized(true);
+            console.log('AdSense ad initialized for slot:', adSlot);
+          } else {
+            console.warn('AdSense not available, ad may not display correctly');
+          }
+        }, 100);
+      }
+      
       // Check if ads are loaded properly after a short delay
       const timer = setTimeout(() => {
         // Simple check for ad blockers - not foolproof but provides basic detection
-        const adElements = document.querySelectorAll('.adsbygoogle');
-        const lastAd = adElements[adElements.length - 1];
-        
-        if (lastAd && lastAd.innerHTML.length === 0) {
+        if (adRef.current && adRef.current.querySelector('ins')?.innerHTML.length === 0) {
           console.log('Potential ad blocker detected');
           setIsAdBlockDetected(true);
         }
       }, 2000);
-      
-      // Push the ad only after component mounts
-      (window.adsbygoogle = window.adsbygoogle || []).push({});
-      console.log('AdSense ad pushed to queue');
       
       return () => clearTimeout(timer);
     } catch (error) {
       console.error('Error loading AdSense ad:', error);
       setIsAdBlockDetected(true);
     }
-  }, []);
+  }, [adSlot, isInitialized]);
 
   // Set responsive dimensions based on format
   const getResponsiveClasses = () => {
@@ -61,7 +77,7 @@ const AdBanner = ({ adSlot, format = 'auto', className = '', responsive = true }
   };
 
   return (
-    <div className={`ad-container my-4 overflow-hidden ${getResponsiveClasses()} ${className} fade-in`}>
+    <div ref={adRef} className={`ad-container my-4 overflow-hidden ${getResponsiveClasses()} ${className} fade-in`}>
       {isAdBlockDetected ? (
         <div className="w-full h-full flex items-center justify-center border border-dashed border-gray-300 bg-gray-50 dark:bg-gray-800 dark:border-gray-700 rounded text-center p-4">
           <div>

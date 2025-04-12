@@ -4,30 +4,24 @@ import React, { useEffect } from 'react';
 const AdScript = () => {
   useEffect(() => {
     try {
-      // Remove any existing AdSense script to prevent duplicates
-      const existingScript = document.querySelector('script[src*="pagead2.googlesyndication.com"]');
-      if (existingScript) {
-        document.head.removeChild(existingScript);
-      }
+      // AdSense script is now loaded in the head of the document via index.html
+      // This component will only handle the initialization of ads
       
-      // Create and add the AdSense script
-      const script = document.createElement('script');
-      script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7217348742748729';
-      script.async = true;
-      script.crossOrigin = 'anonymous';
-      script.onerror = () => {
-        console.error('AdSense script failed to load. Ad blocker might be enabled.');
-      };
-      document.head.appendChild(script);
-      
-      // Initialize ads if adsense is loaded
+      // Initialize ads when the page loads
       window.addEventListener('load', () => {
         if (typeof window.adsbygoogle !== 'undefined') {
           try {
+            // Check for ad units
             const adUnits = document.querySelectorAll('.adsbygoogle');
             if (adUnits.length > 0) {
-              (window.adsbygoogle = window.adsbygoogle || []).push({});
-              console.log(`Initialized ${adUnits.length} AdSense units`);
+              console.log(`Found ${adUnits.length} AdSense units, initializing...`);
+              
+              // Only initialize ad units that haven't been initialized yet
+              adUnits.forEach((adUnit) => {
+                if (adUnit.getAttribute('data-adsbygoogle-status') !== 'done') {
+                  (window.adsbygoogle = window.adsbygoogle || []).push({});
+                }
+              });
             }
           } catch (e) {
             console.error('AdSense initialization error:', e);
@@ -36,16 +30,8 @@ const AdScript = () => {
           console.warn('AdSense not available. Ads may not display correctly.');
         }
       });
-      
-      return () => {
-        // Clean up script if component unmounts
-        const scriptToRemove = document.querySelector('script[src*="pagead2.googlesyndication.com"]');
-        if (scriptToRemove) {
-          document.head.removeChild(scriptToRemove);
-        }
-      };
     } catch (error) {
-      console.error('Error loading AdSense script:', error);
+      console.error('Error handling AdSense:', error);
     }
   }, []);
 
