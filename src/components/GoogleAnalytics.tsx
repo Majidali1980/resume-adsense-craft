@@ -2,8 +2,8 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
-// Replace with your Google Analytics Measurement ID
-const GA_MEASUREMENT_ID = 'G-XXXXXXXXXX';
+// Google Analytics Measurement ID
+const GA_MEASUREMENT_ID = 'G-FQJZCHH2H2';
 
 const GoogleAnalytics = () => {
   const location = useLocation();
