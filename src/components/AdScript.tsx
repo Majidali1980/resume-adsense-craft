@@ -12,7 +12,7 @@ const AdScript = () => {
       
       // Create and add the AdSense script
       const script = document.createElement('script');
-      script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1234567890123456'; // Replace with your actual AdSense publisher ID
+      script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7217348742748729';
       script.async = true;
       script.crossOrigin = 'anonymous';
       script.onerror = () => {

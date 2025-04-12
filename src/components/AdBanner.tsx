@@ -61,7 +61,7 @@ const AdBanner = ({ adSlot, format = 'auto', className = '', responsive = true }
   };
 
   return (
-    <div className={`ad-container my-4 overflow-hidden ${getResponsiveClasses()} ${className}`}>
+    <div className={`ad-container my-4 overflow-hidden ${getResponsiveClasses()} ${className} fade-in`}>
       {isAdBlockDetected ? (
         <div className="w-full h-full flex items-center justify-center border border-dashed border-gray-300 bg-gray-50 dark:bg-gray-800 dark:border-gray-700 rounded text-center p-4">
           <div>
@@ -77,7 +77,7 @@ const AdBanner = ({ adSlot, format = 'auto', className = '', responsive = true }
         <ins 
           className="adsbygoogle block"
           style={{ display: 'block', textAlign: 'center', width: '100%', height: '100%' }}
-          data-ad-client="ca-pub-1234567890123456" // Replace with your actual AdSense publisher ID
+          data-ad-client="ca-pub-7217348742748729"
           data-ad-slot={adSlot}
           data-ad-format={format}
           data-full-width-responsive={responsive ? "true" : "false"}

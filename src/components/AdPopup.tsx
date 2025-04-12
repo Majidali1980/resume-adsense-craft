@@ -40,15 +40,15 @@ const AdPopup: React.FC<AdPopupProps> = ({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="sm:max-w-[500px]">
+      <DialogContent className="sm:max-w-[500px] animate-float">
         <DialogHeader>
           <DialogTitle className="text-center">Create Professional Resumes with ResumeCraft</DialogTitle>
         </DialogHeader>
         
         <div className="py-6">
-          <AdBanner adSlot="5678901234" format="rectangle" className="mx-auto" />
+          <AdBanner adSlot="5678901234" format="rectangle" className="mx-auto fade-in" />
           
-          <div className="mt-6 text-center">
+          <div className="mt-6 text-center slide-in-right">
             <p className="text-sm text-gray-600">
               Upgrade to ResumeCraft Premium for unlimited templates, no ads, and advanced features!
             </p>
@@ -59,7 +59,7 @@ const AdPopup: React.FC<AdPopupProps> = ({
           <Button variant="outline" onClick={() => setOpen(false)}>
             Not Now
           </Button>
-          <Button onClick={() => setOpen(false)}>
+          <Button onClick={() => setOpen(false)} className="bg-resume-blue hover:bg-blue-800 transition-colors">
             Learn More
           </Button>
         </DialogFooter>
