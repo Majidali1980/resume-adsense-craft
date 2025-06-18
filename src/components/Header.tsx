@@ -31,9 +31,14 @@ const Header = ({ onExport }: HeaderProps) => {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 max-w-screen-2xl items-center">
-        <div className="flex items-center gap-2 font-bold text-xl text-resume-blue">
-          <BookOpenText className="h-6 w-6" />
-          <span>ResumeCraft</span>
+        <div className="flex items-center gap-3 font-bold text-xl text-resume-blue cursor-pointer" onClick={() => navigate('/home')}>
+          <div className="flex items-center justify-center w-10 h-10 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg">
+            <BookOpenText className="h-6 w-6 text-white" />
+          </div>
+          <div className="flex flex-col">
+            <span className="text-lg leading-tight">ResumeCraft</span>
+            <span className="text-xs text-gray-500 font-normal">by MA DIGITAL HUB</span>
+          </div>
         </div>
         <div className="flex flex-1 items-center justify-end space-x-4">
           {!isHome && (
